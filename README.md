@@ -10,6 +10,7 @@ git clone https://github.com/lorenzoferrante/Nachos.git
 # Go into the repository
 cd Nachos
 # Install dependencies
+# NOTE: sudo is just for macOS
 (sudo) npm install -g typescript
 (sudo) npm install
 # Run the app
