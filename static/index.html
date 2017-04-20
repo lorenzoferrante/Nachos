@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Nachos</title>
+    <!-- Latest compiled and minified CSS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+      <div id="waiting">
+        <p>Please wait until VLC will open...</p>
+        <a href="#" id="close-box">Close</a>
+      </div>
+
+      <div class="alert alert-danger" id="no-conn" role="alert"><p>No internet connection! Try again later (or cmd + R)</p></div>
+
+  		<div id="drag-area">
+
+  		<div id="container">
+        <div id="no-res"><h4>Sorry, this movie is not in the database yet! Please try again later.</h4></div>
+  			<div id="logo-div"><img src="nachos_logo_2.png" id="logo" alt="logo"></div>
+
+    		<div class="input-group">
+                <input type="text" class="form-control" id="str" placeholder="Insert movie title...">
+                <span class="input-group-btn">
+                	<button class="btn btn-default" id="search-btn" type="button">Search</button>
+                </span>
+           </div>
+
+           	<ul id="results">
+           	<!--<li><div class="card" style="width: 100%;">
+				<img class="card-img-top" src="" alt="Card image cap">
+				<div class="card-block">
+			    	<h4 class="card-title">Card title</h4>
+			    	<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+			    	<a href="#" class="btn btn-primary">Watch!</a>
+			  	</div>
+			</div></li>-->
+			</ul>
+
+      	</div>
+      	</div>
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('../compiledJS/renderer.js')
+  </script>
+</html>

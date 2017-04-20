@@ -1,0 +1,32 @@
+{
+  "name": "electron_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "electron .",
+    "pack": "electron-packager . sample --out=dist --arch=x64 --platform=win32 --version=1.4.4 --overwrite --prune --ignore=dist --ignore=typings"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/electron": "^1.4.24",
+    "electron-packager": "^8.1.0",
+    "electron-prebuilt": "^1.4.4",
+    "typescript": "^2.0.3"
+  },
+  "dependencies": {
+    "eztv": "0.0.10",
+    "imdb-api": "^2.2.1",
+    "jquery": "^3.2.0",
+    "node-notifier": "^5.1.2",
+    "node-vlc-json": "0.0.3",
+    "ps-node": "^0.1.5",
+    "request": "^2.81.0",
+    "subtitler": "^2.6.0",
+    "yify-search": "^1.0.0",
+    "yifysubtitles": "^2.1.2"
+  }
+}

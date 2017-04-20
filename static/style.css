@@ -1,0 +1,147 @@
+html, body {
+	background-color: #181A1C !important;
+	color: #ecf0f1 !important;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.blur {
+	-webkit-filter: blur(20px);
+	filter: blur(20px);
+}
+
+#waiting {
+	z-index: 1000;
+	position: fixed;
+	top: 40%;
+	left: 25%;
+	width: auto;
+	height: 50px;
+	padding: 20px;
+	padding-top: 15px;
+	border-radius: 5px;
+	background-color: #151616 !important;
+	text-align: center;
+}
+
+#drag-area {
+	width: 100%;
+	-webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+
+#container {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+#no-conn {
+	position: fixed;
+	top: 160px;
+	left: 30px;
+	width: 90%;
+	margin: 0 auto;
+	height: 50px;
+	z-index: 100;
+	visibility: hidden;
+}
+
+#no-res {
+	z-index: 1000;
+	width: 520px;
+	height: auto;
+	padding: 0;
+	position: fixed;
+	top: 170px;
+	left: 50%;
+	margin-left: -260px;
+}
+
+#logo-div {
+	width: 150px;
+	margin: 0 auto;
+}
+
+#logo {
+	width: 150px;
+	margin-bottom: 20px;
+}
+
+div {
+	margin-bottom : 30px;
+}
+
+ul#results {
+	list-style: none;
+    padding-left: 0;
+}
+
+#poster {
+	padding-right: 10px;
+	float: left;
+	max-height: 200px;
+	background-size: contain;
+}
+
+.card {
+	border: 1px solid #151616 !important;
+	background-color: #292D31 !important;
+}
+
+span.badge {
+	margin-right: 5px;
+	font-size: 12px;
+	font-weight: lighter;
+}
+
+.card-img-top {
+	filter: brightness(0.5);
+	-webkit-filter: brightness(0.5);
+	height: 200px !important;
+	background-size: cover !important;
+}
+
+.poster {
+	z-index: 1;
+	position: relative;
+	width: 150px;
+	margin-top: -130px;
+	float: left;
+	margin-right: 15px;
+	margin-bottom: 5px;
+	border: 1px solid #000;
+	border-radius: 3px;
+}
+
+p.card-text {
+	font-size: 14px !important;
+	color: #898989 !important;
+}
+
+.form-control {
+	background-color: #292D31 !important;
+	border-color: #151616 !important;
+	color: #ecf0f1 !important;
+}
+
+.btn-default {
+	background-color: #e74c3c !important;
+	border-color: #e74c3c !important;
+	color: #ecf0f1 !important;
+}
+
+.btn-primary {
+	float: left;
+	margin-right: 20px;
+	background-color: #27ae60 !important;
+	border-color: #27ae60 !important;
+	color: #ecf0f1 !important;
+}
+
+.sub {
+	background-color: #e67e22 !important;
+	border-color: #d35400 !important;
+}
