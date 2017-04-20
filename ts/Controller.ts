@@ -7,6 +7,7 @@ import { Utils } from './Utils'
 import { Notification } from './Notification'
 
 const EventEmitter = require('events').EventEmitter
+const pt = require('path')
 const yify = require('yify-search')
 const exec = require('child_process').exec
 const $ = require('jQuery')
@@ -70,7 +71,8 @@ class Controller {
           this.noti.playing(mv)
 
           if (path != '') {
-              cmd = 'peerflix "' + magnet + '" --vlc --subtitles ' + path
+              cmd = 'peerflix "' + magnet + '" --vlc -- --sub-file=' + path
+              console.log(cmd)
           } else {
               cmd = 'peerflix "' + magnet + '" --vlc'
           }
@@ -81,10 +83,10 @@ class Controller {
                   return
               }
               console.log('stdoud: ' + stdout)
-              console.log('stderror: '+ stderror)
+              console.log('stderror: ' + stderror)
 
-              let pid = this.player.retrievePIDByName()
-              console.log('Peerflix with PID: ' + pid)
+              //let pid = this.player.retrievePIDByName()
+              //console.log('Peerflix with PID: ' + pid)
           })
 
           peerflix.stdout.on('data', (data) => {
@@ -98,13 +100,13 @@ class Controller {
               if (mv.imdbCode == movieID) {
                   // Download Subtitle
                   if (mv.getSubs().length > 0) {
-                      let subPath = mv.getSubs()[0].getLink()
+                      let subPath = this.getLangSub(mv)
                       console.log(subPath)
 
-                      console.log('Playing: ' + mv.title + ' with magnet: ' + mv.magnet)
+                      console.log('Playing: ' + mv.title)
                    	  this.peerflixManager(mv.magnet, subPath, mv)
                   } else {
-                      console.log('Playing: ' + mv.title + ' with magnet: ' + mv.magnet)
+                      console.log('Playing: ' + mv.title)
                    	  this.peerflixManager(mv.magnet, '', mv)
                   }
               }
@@ -128,6 +130,21 @@ class Controller {
                   }
               }
           }
+      }
+
+      /* Get preferred language subs */
+      getLangSub(mv: Movie): string {
+          let path: string
+
+          for (let s of mv.getSubs()) {
+              if (s.getLang() == 'it') {
+                  return s.getLink()
+              } else {
+                  path = s.getLink()
+              }
+          }
+
+          return path
       }
 }
 

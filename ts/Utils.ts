@@ -19,7 +19,6 @@ class Utils {
                 return true
             }
         })
-        console.log('[Error] connection failed')
         return false
     }
 

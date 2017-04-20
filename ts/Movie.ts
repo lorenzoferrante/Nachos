@@ -104,7 +104,7 @@ class Movie {
   setSubs(data: any) {
       console.log('[EVENT] setting subs for: ' + this.title)
       for (let sub of data) {
-          let s = new Sub(this.title, sub.path, sub.langShort, this.imdbCode)
+          let s = new Sub(this.title, sub.path.replace(/\s/g, ''), sub.langShort, this.imdbCode)
           this.subs.push(s)
       }
   }

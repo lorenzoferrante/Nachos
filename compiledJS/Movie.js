@@ -73,7 +73,7 @@ var Movie = (function () {
         console.log('[EVENT] setting subs for: ' + this.title);
         for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
             var sub = data_1[_i];
-            var s = new Sub(this.title, sub.path, sub.langShort, this.imdbCode);
+            var s = new Sub(this.title, sub.path.replace(/\s/g, ''), sub.langShort, this.imdbCode);
             this.subs.push(s);
         }
     };

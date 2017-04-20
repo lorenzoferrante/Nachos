@@ -1,17 +1,2 @@
-<img src="https://github.com/lorenzoferrante/Nachos/blob/master/static/nachos_logo_2.png" width=200 />
-
-## To Use
-
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
-
-```bash
-# Clone this repository
-git clone https://github.com/lorenzoferrante/Nachos.git
-# Go into the repository
-cd Nachos
-# Install dependencies
-npm install -g typescript
-npm install
-# Run the app
-npm start
-```
+# electron-typescript-sample
+Sample for 'Electron + TypeScript App'

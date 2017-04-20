@@ -20,7 +20,6 @@ var Utils = (function () {
                 return true;
             }
         });
-        console.log('[Error] connection failed');
         return false;
     };
     return Utils;

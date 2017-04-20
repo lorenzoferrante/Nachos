@@ -8,6 +8,7 @@ var MovieSub_1 = require("./MovieSub");
 var Utils_1 = require("./Utils");
 var Notification_1 = require("./Notification");
 var EventEmitter = require('events').EventEmitter;
+var pt = require('path');
 var yify = require('yify-search');
 var exec = require('child_process').exec;
 var $ = require('jQuery');
@@ -52,11 +53,11 @@ var Controller = (function () {
     };
     /* Methods to control Peerflix */
     Controller.prototype.peerflixManager = function (magnet, path, mv) {
-        var _this = this;
         var cmd;
         this.noti.playing(mv);
         if (path != '') {
-            cmd = 'peerflix "' + magnet + '" --vlc --subtitles ' + path;
+            cmd = 'peerflix "' + magnet + '" --vlc -- --sub-file=' + path;
+            console.log(cmd);
         }
         else {
             cmd = 'peerflix "' + magnet + '" --vlc';
@@ -68,8 +69,8 @@ var Controller = (function () {
             }
             console.log('stdoud: ' + stdout);
             console.log('stderror: ' + stderror);
-            var pid = _this.player.retrievePIDByName();
-            console.log('Peerflix with PID: ' + pid);
+            //let pid = this.player.retrievePIDByName()
+            //console.log('Peerflix with PID: ' + pid)
         });
         peerflix.stdout.on('data', function (data) {
             //console.log(data.toString('utf8'))
@@ -82,13 +83,13 @@ var Controller = (function () {
             if (mv.imdbCode == movieID) {
                 // Download Subtitle
                 if (mv.getSubs().length > 0) {
-                    var subPath = mv.getSubs()[0].getLink();
+                    var subPath = this.getLangSub(mv);
                     console.log(subPath);
-                    console.log('Playing: ' + mv.title + ' with magnet: ' + mv.magnet);
+                    console.log('Playing: ' + mv.title);
                     this.peerflixManager(mv.magnet, subPath, mv);
                 }
                 else {
-                    console.log('Playing: ' + mv.title + ' with magnet: ' + mv.magnet);
+                    console.log('Playing: ' + mv.title);
                     this.peerflixManager(mv.magnet, '', mv);
                 }
             }
@@ -112,6 +113,20 @@ var Controller = (function () {
                 }
             }
         }
+    };
+    /* Get preferred language subs */
+    Controller.prototype.getLangSub = function (mv) {
+        var path;
+        for (var _i = 0, _a = mv.getSubs(); _i < _a.length; _i++) {
+            var s = _a[_i];
+            if (s.getLang() == 'it') {
+                return s.getLink();
+            }
+            else {
+                path = s.getLink();
+            }
+        }
+        return path;
     };
     return Controller;
 }());
