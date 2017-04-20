@@ -10,8 +10,8 @@ git clone https://github.com/lorenzoferrante/Nachos.git
 # Go into the repository
 cd Nachos
 # Install dependencies
-npm install -g typescript
-npm install
+(sudo) npm install -g typescript
+(sudo) npm install
 # Run the app
 npm start
 ```
