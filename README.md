@@ -15,9 +15,3 @@ npm install
 # Run the app
 npm start
 ```
-
-## Changes
-#### 21/03/17 - 15:00
-- Aggiunta classe Manager.js per gestire le ricerche dei torrent e il comando peerflix.
-- Aggiunta classe TorrentInfo.js che gestisce il file .torrent di ogni Movie (in mancanza del magnet link)
-- Aggiornata classe Movie.js con aggiunta dell'attributo torrent, che risulta utile in mancanza del magnet link)
