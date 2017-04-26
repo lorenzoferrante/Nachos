@@ -38,8 +38,11 @@ $(document).on('click', 'a.watch', function() {
 })
 
 $(document).on('click', 'a.sub', function() {
-   var movieID = $(this).attr('id')
-   ctrl.printSubs(movieID)
+    var movieID = $(this).attr('id')
+    $(this).css('border', '3px solid green')
+    var movieLang = $(this).find('span').attr('id')
+    console.log(movieID + ' - ' + movieLang)
+    ctrl.setSubLang(movieID, movieLang)
 })
 
 $(document).on('click', 'a#close-box', function() {

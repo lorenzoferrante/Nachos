@@ -55,11 +55,13 @@ class Controller {
                   // Get subtitles
                   let mvSub = new MovieSub(this.movie)
                   EM.receiveSubs(this.movie)
-                  console.log(this.movie.getTitle() + ': ' + this.movie.getSubs)
+                  //console.log(this.movie.getTitle() + ': ' + this.movie.getSubs)
 
                   this.movieList.push(this.movie)
 
-                  $('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">Size: '+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info">Year: '+this.movie.getYear()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><a href="#'+$(this).attr("id")+'" class="btn btn-primary watch" id="'+this.movie.getIMDB()+'">Watch!</a></p><a href="#'+$(this).attr("id")+'" class="btn btn-primary sub" id="'+this.movie.getIMDB()+'">Subtitles</a></div></div></li>')
+                  //$('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">Size: '+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info">Year: '+this.movie.getYear()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><a href="#'+$(this).attr("id")+'" class="btn btn-primary watch" id="'+this.movie.getIMDB()+'">Watch!</a></p><a href="#'+$(this).attr("id")+'" class="btn btn-primary sub" id="'+this.movie.getIMDB()+'">Subtitles</a></div></div></li>')
+
+                  $('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">Size: '+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info">Year: '+this.movie.getYear()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><a href="#'+$(this).attr("id")+'" class="btn btn-primary watch" id="'+this.movie.getIMDB()+'">Watch!</a></p><ul class="list-lang '+this.movie.getIMDB()+'"></ul></div></div></li>')
               }
           })
       }
@@ -100,15 +102,12 @@ class Controller {
               if (mv.imdbCode == movieID) {
                   // Download Subtitle
                   if (mv.getSubs().length > 0) {
-                      let subPath = this.getLangSub(mv)
-                      console.log(subPath)
-
-                      console.log('Playing: ' + mv.title)
+                      let subPath = mv.getSubPath()
                    	  this.peerflixManager(mv.magnet, subPath, mv)
                   } else {
-                      console.log('Playing: ' + mv.title)
                    	  this.peerflixManager(mv.magnet, '', mv)
                   }
+                  console.log('Playing: ' + mv.title)
               }
           }
       }
@@ -123,7 +122,7 @@ class Controller {
       /* Print subs for a movie */
       printSubs(movieID: string) {
           for (let mv of this.movieList) {
-              if (mv.imdbCode == movieID) {
+              if (mv.getIMDB() == movieID) {
                   console.log('Showing subs for: ' + mv.title + ' - IMDB: ' + this.movie.getIMDB().substring(2))
                   for (let s of mv.getSubs()) {
                       console.log(s.getTitle() + ' - ' + s.getLang() + ' - ' + s.getIMDB() + ' - ' + s.getLink())
@@ -132,20 +131,19 @@ class Controller {
           }
       }
 
-      /* Get preferred language subs */
-      getLangSub(mv: Movie): string {
-          let path: string
-
-          for (let s of mv.getSubs()) {
-              if (s.getLang() == 'it') {
-                  return s.getLink()
-              } else {
-                  path = s.getLink()
+      setSubLang(movieID: string, movieLang: string) {
+          for (let mv of this.movieList) {
+              if (mv.getIMDB() == movieID) {
+                  for (let s of mv.getSubs()) {
+                      console.log(s.getLang() + ' - ' + movieLang)
+                      if (s.getLang() == movieLang) {
+                          mv.setSubPath(s.getLink())
+                      }
+                  }
               }
           }
-
-          return path
       }
+
 }
 
 export { Controller }
