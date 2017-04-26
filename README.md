@@ -1,8 +1,6 @@
-<img align="center" src="https://github.com/lorenzoferrante/Nachos/blob/master/static/nachos_logo_2.png" width=200 />
+<p align="center"><img src="https://github.com/lorenzoferrante/Nachos/blob/master/static/nachos_logo_2.png" width=200 /></p>
 
 ## How To Use
-
-<img align="center" src="https://github.com/lorenzoferrante/Nachos/blob/master/static/example.png" width=400 />
 
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
@@ -21,3 +19,6 @@ npm start
 ## Known Bugs
 - Subtitles duplicates for a movie when it is searched again.
 - Problem quitting Peerflix directly from the app, letting the possibility to instantiate two or more Peerflix processes concurrently.
+
+## Screenshots
+<p align="center"><img src="https://github.com/lorenzoferrante/Nachos/blob/master/static/example.png" width=400 /></p>
