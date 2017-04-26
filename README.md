@@ -1,8 +1,8 @@
-<img src="https://github.com/lorenzoferrante/Nachos/blob/master/static/nachos_logo_2.png" width=200 />
+<img align="center" src="https://github.com/lorenzoferrante/Nachos/blob/master/static/nachos_logo_2.png" width=200 />
 
 ## How To Use
 
-<img src="https://github.com/lorenzoferrante/Nachos/blob/master/static/example.png" width=200 />
+<img align="center" src="https://github.com/lorenzoferrante/Nachos/blob/master/static/example.png" width=400 />
 
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
