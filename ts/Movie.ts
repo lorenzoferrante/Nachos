@@ -128,9 +128,9 @@ class Movie {
           let movieClass = '.' + this.imdbCode
 
           if (sub.langShort == 'en') {
-              $(movieClass).append('<li><a href="javascript:void(0)" id="'+this.imdbCode+'" class="sub"><span class="flag-icon flag-icon-gb" id="en"></span></a></li>')
+              $(movieClass).append('<li><a href="javascript:void(0)" id="'+this.imdbCode+'" class="sub"><span class="flag-icon flag-icon-gb flag-icon-squared" id="en"></span></a></li>')
           } else {
-              $(movieClass).append('<li><a href="javascript:void(0)" id="'+this.imdbCode+'" class="sub"><span class="flag-icon flag-icon-it" id="it"></span></a></li>')
+              $(movieClass).append('<li><a href="javascript:void(0)" id="'+this.imdbCode+'" class="sub"><span class="flag-icon flag-icon-it flag-icon-squared" id="it"></span></a></li>')
           }
 
           this.subs.push(s)

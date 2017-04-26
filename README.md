@@ -16,3 +16,6 @@ cd Nachos
 # Run the app
 npm start
 ```
+## Known Bugs
+- Subtitles duplicates for a movie when it is searched again.
+- Problem quitting Peerflix directly from the app, letting the possibility to instantiate two or more Peerflix processes concurrently.
