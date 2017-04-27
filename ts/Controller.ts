@@ -19,11 +19,12 @@ class Controller {
       movie: Movie
       movieList: Movie[]
       newTorrent: Torrent
+      pid: number
 
       constructor() {
           this.utils = new Utils()
           this.noti = new Notification()
-          this.player = new Process('peerflix')
+          this.player = new Process()
       }
 
       // Methods
@@ -84,12 +85,17 @@ class Controller {
               	console.log('exec error: ' + error)
                   return
               }
+
+              this.player.retrievePIDByName()
+
               console.log('stdoud: ' + stdout)
               console.log('stderror: ' + stderror)
 
               //let pid = this.player.retrievePIDByName()
               //console.log('Peerflix with PID: ' + pid)
           })
+
+          this.player.retrievePIDByName()
 
           peerflix.stdout.on('data', (data) => {
           	//console.log(data.toString('utf8'))

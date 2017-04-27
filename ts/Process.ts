@@ -1,15 +1,9 @@
 const exec = require('child_process').exec
 
 class Process {
-    /* If false, process does not exist or it was killed
-    if it's true, process is running */
-    status: boolean = false
     private pid: number
-    private name?: string
 
-    constructor(name?: string) {
-        this.name = name
-    }
+    constructor() {}
 
     // Setters
     setPID(pid: number) {
@@ -21,28 +15,17 @@ class Process {
         return this.pid
     }
 
-    getStatus(): boolean {
-        return this.status
-    }
-
     // Methods
     retrievePIDByName(): number {
-        if (this.name == 'undefined') {
-            return 0
-        }
+        let cmd = 'ps -A | grep peerflix | head -c 5'
+        exec(cmd, (err, stdout, stderr) => {
+            if (err) console.log(err)
 
-        let cmd = 'pgrep -f ' + this.name
-        exec(cmd, (err, stdout, stderror) => {
-            if (err) {
-                console.error(err)
-                return
-            }
-
+            console.log(stderr)
             this.pid = stdout
-            this.status = true
-            return this.pid
+            return stdout
         })
-        
+
         return 0
     }
 
@@ -56,7 +39,6 @@ class Process {
 
             console.log(stdout)
             console.log(stderr)
-            this.status = false
             return true
         })
         return true

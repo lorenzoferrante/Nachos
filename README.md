@@ -18,7 +18,7 @@ npm start
 ```
 ## Known Bugs
 - Subtitles duplicates for a movie when it is searched again.
-- Problem quitting Peerflix directly from the app, letting the possibility to instantiate two or more Peerflix processes concurrently.
+- <del>Problem quitting Peerflix directly from the app, letting the possibility to instantiate two or more Peerflix processes concurrently.</del>
 
 ## Screenshots
 <p align="center"><img src="https://github.com/lorenzoferrante/Nachos/blob/master/static/example.png" width=400 /></p>
