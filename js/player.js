@@ -8,6 +8,8 @@ const BrowserWindow = electron.remote.BrowserWindow
 
 const path = require('path')
 const url = require('url')
+const fs = require('fs')
+const srt2vtt = require('srt-to-vtt')
 
 let playerWindow
 var exports = module.exports = {}
@@ -23,7 +25,7 @@ exports.createPlayer = function() {
     })
 
     playerWindow.loadURL(url.format({
-      pathname: path.join(__dirname, 'static/player.html'),
+      pathname: path.join(__dirname, '../static/player.html'),
       protocol: 'file:',
       slashes: true
     }))
@@ -34,4 +36,10 @@ exports.createPlayer = function() {
       // when you should delete the corresponding element.
       playerWindow = null
     })
+}
+
+exports.serveSubtitle = function(path) {
+    fs.createReadStream(path)
+        .pipe(srt2vtt())
+        .pipe(fs.createWriteStream('sub.vtt'))
 }

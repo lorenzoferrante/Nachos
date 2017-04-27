@@ -12,32 +12,6 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-let playerWindow
-
-function createPlayerWindow() {
-    playerWindow = new BrowserWindow({
-      width: 600,
-      height: 700,
-      frame: true,
-      resizable: false,
-      maximizable: false,
-      titleBarStyle: 'hidden',
-      icon: __dirname + '/static/app_icon.ico'
-    })
-
-    playerWindow.loadURL(url.format({
-      pathname: path.join(__dirname, 'static/player.html'),
-      protocol: 'file:',
-      slashes: true
-    }))
-
-    playerWindow.on('closed', function () {
-      // Dereference the window object, usually you would store windows
-      // in an array if your app supports multi windows, this is the time
-      // when you should delete the corresponding element.
-      playerWindow = null
-    })
-}
 
 function createWindow () {
   // Create the browser window.

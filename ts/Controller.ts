@@ -11,7 +11,7 @@ const pt = require('path')
 const yify = require('yify-search')
 const exec = require('child_process').exec
 const $ = require('jQuery')
-const player = require('../Player')
+const player = require('../js/player')
 
 class Controller {
       peerflix: Process
@@ -74,7 +74,7 @@ class Controller {
           this.noti.playing(mv)
 
           if (path != '') {
-              cmd = 'peerflix "' + magnet + '" --vlc -- --sub-file=' + path
+              //cmd = 'peerflix "' + magnet + '" --vlc -- --sub-file=' + path
               console.log(cmd)
           } else {
               //cmd = 'peerflix "' + magnet + '" --vlc'
@@ -95,6 +95,9 @@ class Controller {
 
           this.peerflix.retrievePIDByName()
           player.createPlayer()
+          if (path != '')
+            player.serveSubtitle(path)
+
       }
 
       /* Stream a torrent using VLC and Peerflix from command line */

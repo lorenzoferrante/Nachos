@@ -19,7 +19,6 @@ class SubEmitter {
             mv.setSubs(data)
         })
     }
-
 }
 
 export { SubEmitter }

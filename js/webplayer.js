@@ -30,24 +30,12 @@ var onsubs = function(buf) {
 
   var $track = document.createElement('track')
   $track.setAttribute('default', 'default')
-  $track.setAttribute('src', 'data:text/vtt;base64,'+buf.toString('base64'))
+  //$track.setAttribute('src', 'data:text/vtt;base64,'+buf.toString('base64'))
+  $track.setAttribute('src', buf)
   $track.setAttribute('label', 'Subtitles')
   $track.setAttribute('kind', 'subtitles')
   $video.appendChild($track)
 }
-
-var onfile = function(file) {
-  if (/\.srt$/i.test(file.name)) return filereader(file).pipe(vtt()).pipe(concat(onsubs))
-
-  if ($('source')) $video.removeChild($('source'))
-  if ($('track')) $video.removeChild($('track'))
-
-  play(URL.createObjectURL(file))
-}
-
-drop($body, function(files) {
-  onfile(files[0])
-})
 
 on($hidden, 'change', function() {
   onfile($hidden.files[0])
@@ -55,15 +43,11 @@ on($hidden, 'change', function() {
 
 on($url, 'click', function(e) {
     play('http://localhost:8888/')
-  //if (e.keyCode === 13) play('http://localhost:8888/')
+    onsubs('../sub.vtt')
 })
 
 on($body, 'load', function() {
     play('http://localhost:8888/')
-})
-
-on($file, 'click', function() {
-  $hidden.click()
 })
 
 if (location.hash.split('#').pop()) play(location.hash.split('#').pop())
