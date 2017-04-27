@@ -39,7 +39,6 @@ class Process {
 
             console.log(stdout)
             console.log(stderr)
-            return true
         })
         return true
     }

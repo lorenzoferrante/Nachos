@@ -56,7 +56,6 @@ class Controller {
                   // Get subtitles
                   let mvSub = new MovieSub(this.movie)
                   EM.receiveSubs(this.movie)
-                  //console.log(this.movie.getTitle() + ': ' + this.movie.getSubs)
 
                   this.movieList.push(this.movie)
 
@@ -86,20 +85,11 @@ class Controller {
                   return
               }
 
-              this.player.retrievePIDByName()
-
               console.log('stdoud: ' + stdout)
               console.log('stderror: ' + stderror)
-
-              //let pid = this.player.retrievePIDByName()
-              //console.log('Peerflix with PID: ' + pid)
           })
 
           this.player.retrievePIDByName()
-
-          peerflix.stdout.on('data', (data) => {
-          	//console.log(data.toString('utf8'))
-          })
       }
 
       /* Stream a torrent using VLC and Peerflix from command line */
@@ -123,18 +113,6 @@ class Controller {
           let pid = this.player.getPID()
           console.log('Killing Peerflix with PID: ' + pid)
           this.player.killProcess()
-      }
-
-      /* Print subs for a movie */
-      printSubs(movieID: string) {
-          for (let mv of this.movieList) {
-              if (mv.getIMDB() == movieID) {
-                  console.log('Showing subs for: ' + mv.title + ' - IMDB: ' + this.movie.getIMDB().substring(2))
-                  for (let s of mv.getSubs()) {
-                      console.log(s.getTitle() + ' - ' + s.getLang() + ' - ' + s.getIMDB() + ' - ' + s.getLink())
-                  }
-              }
-          }
       }
 
       setSubLang(movieID: string, movieLang: string) {
