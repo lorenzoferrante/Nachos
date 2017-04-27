@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "eztv": "0.0.10",
+    "flag-icon-css": "^2.8.0",
     "imdb-api": "^2.2.1",
     "jquery": "^3.2.0",
     "node-notifier": "^5.1.2",
