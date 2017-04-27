@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "tsc",
-    "prestart": "npm run build",
+    "prestart": "browserify webplayer.js > bundle.js && npm run build",
     "start": "electron .",
     "pack": "electron-packager . sample --out=dist --arch=x64 --platform=win32 --version=1.4.4 --overwrite --prune --ignore=dist --ignore=typings"
   },
@@ -15,7 +15,10 @@
     "@types/electron": "^1.4.24",
     "electron-packager": "^8.1.0",
     "electron-prebuilt": "^1.4.4",
-    "typescript": "^2.0.3"
+    "typescript": "^2.0.3",
+    "browserify": "^8.0.3",
+    "html-inline": "^1.1.1",
+    "wzrd": "^1.1.0"
   },
   "dependencies": {
     "eztv": "0.0.10",
@@ -28,6 +31,11 @@
     "request": "^2.81.0",
     "subtitler": "^2.6.0",
     "yify-search": "^1.0.0",
-    "yifysubtitles": "^2.1.2"
+    "yifysubtitles": "^2.1.2",
+    "concat-stream": "^1.4.7",
+    "filereader-stream": "^0.2.0",
+    "add-event-listener": "^0.0.1",
+    "drag-and-drop-files": "^0.0.1",
+    "srt-to-vtt": "^1.0.1"
   }
 }

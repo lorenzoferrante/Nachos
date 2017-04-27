@@ -11,9 +11,10 @@ const pt = require('path')
 const yify = require('yify-search')
 const exec = require('child_process').exec
 const $ = require('jQuery')
+const player = require('../Player')
 
 class Controller {
-      player: Process
+      peerflix: Process
       utils: Utils
       noti: Notification
       movie: Movie
@@ -24,7 +25,7 @@ class Controller {
       constructor() {
           this.utils = new Utils()
           this.noti = new Notification()
-          this.player = new Process()
+          this.peerflix = new Process()
       }
 
       // Methods
@@ -76,8 +77,10 @@ class Controller {
               cmd = 'peerflix "' + magnet + '" --vlc -- --sub-file=' + path
               console.log(cmd)
           } else {
-              cmd = 'peerflix "' + magnet + '" --vlc'
+              //cmd = 'peerflix "' + magnet + '" --vlc'
           }
+
+          cmd = 'peerflix "' + magnet + '"'
 
       	  let peerflix = exec(cmd, {maxBuffer: 1024 * 100000}, (error, stdout, stderror) => {
           	if (error) {
@@ -85,11 +88,13 @@ class Controller {
                   return
               }
 
+              player.createPlayer()
               console.log('stdoud: ' + stdout)
               console.log('stderror: ' + stderror)
           })
 
-          this.player.retrievePIDByName()
+          this.peerflix.retrievePIDByName()
+          player.createPlayer()
       }
 
       /* Stream a torrent using VLC and Peerflix from command line */
@@ -110,9 +115,9 @@ class Controller {
 
       /* Kill current Peerflix process and the associated VLC process */
       closePeerflix() {
-          let pid = this.player.getPID()
+          let pid = this.peerflix.getPID()
           console.log('Killing Peerflix with PID: ' + pid)
-          this.player.killProcess()
+          this.peerflix.killProcess()
       }
 
       setSubLang(movieID: string, movieLang: string) {
