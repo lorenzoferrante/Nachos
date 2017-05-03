@@ -17,7 +17,7 @@ let mainID, mainWin
 let pidPeerflix
 var exports = module.exports = {}
 
-exports.createPlayer = function(pid) {
+exports.createPlayer = function() {
     playerWindow = new BrowserWindow({
       width: 900,
       height: 500,
@@ -26,8 +26,6 @@ exports.createPlayer = function(pid) {
       maximizable: false,
       titleBarStyle: 'hidden',
     })
-
-    pidPeerflix = pid
 
     mainID = getMainID()
     mainWin = BrowserWindow.fromId(mainID)
@@ -43,8 +41,7 @@ exports.createPlayer = function(pid) {
       // Dereference the window object, usually you would store windows
       // in an array if your app supports multi windows, this is the time
       // when you should delete the corresponding element.
-      console.log('Killing Peerflix with PID: ' + pidPeerflix)
-      killProcess(pidPeerflix)
+      killProcess()
 
       mainWin.show()
       playerWindow = null
@@ -64,17 +61,26 @@ function getMainID() {
     return mainID
 }
 
-function killProcess(pid) {
-    let cmd = 'kill ' + pid
-    exec(cmd, (err, stderr, stdout) => {
-        if (err) {
-            console.log(err)
-            return
-        }
+function killProcess() {
+    let cmd = 'ps -A | grep peerflix | head -c 5'
+    exec(cmd, (err, stdout, stderr) => {
+        if (err) console.log(err)
 
-        console.log(stdout)
         console.log(stderr)
+        pidPeerflix = stdout
+
+        let cmd1 = 'kill ' + pidPeerflix
+        exec(cmd1, (err, stderr, stdout) => {
+            if (err) {
+                console.log(err)
+                return
+            }
+
+            console.log(stdout)
+            console.log(stderr)
+        })
     })
+
 }
 
 exports.serveSubtitle = function(path) {

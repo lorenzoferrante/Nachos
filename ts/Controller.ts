@@ -86,7 +86,7 @@ class Controller {
           })
 
           let p = this.peerflix.retrievePIDByName()
-          player.createPlayer(p)
+          player.createPlayer()
           if (path != '')
             player.serveSubtitle(path)
       }
