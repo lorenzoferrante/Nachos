@@ -5,23 +5,16 @@ import { Utils } from './Utils'
 const $ = require('jQuery')
 
 class Sub {
-    title: string
-    path: string
-    lang: string
-    movieIMDB: string
+    private title: string
+    private path: string
+    private lang: string
+    private movieIMDB: string
 
     constructor(title: string, path: string, lang: string, movieIMDB: string) {
         this.title = title
         this.path = path
         this.lang = lang
         this.movieIMDB = movieIMDB
-    }
-
-    // Methods
-    isEmpty(): boolean {
-        if (this.path == '')
-            return true
-        return false
     }
 
     // Getters
@@ -43,19 +36,19 @@ class Sub {
 }
 
 class Movie {
-  title: string
-  id: string
-  bgImage: string
-  coverImage: string
-  desc: string
-  magnet: string
-  imdbCode: string
-  year: string
-  torrent: Torrent
-  subs: Sub[] = []
-  found: boolean
-  subPath: string
-  u: Utils = new Utils()
+  private title: string
+  private id: string
+  private bgImage: string
+  private coverImage: string
+  private desc: string
+  private magnet: string
+  private imdbCode: string
+  private year: string
+  private torrent: Torrent
+  private subs: Sub[]
+  private found: boolean
+  private subPath: string
+  private u: Utils = new Utils()
 
   constructor(title: string, bgImage: string, coverImage: string, desc: string, magnet: string, imdbCode: string, year: string, torrent: Torrent) {
     this.title = title

@@ -15,7 +15,7 @@ var $video = $('video')
 
 var play = function(url) {
   $menu.style.display = 'none'
-  $body.style.backgroundColor = '#000'
+  $body.style.backgroundColor = '#181A1C'
 
   var $src = document.createElement('source')
   $src.setAttribute('src', url)
@@ -44,7 +44,7 @@ on($hidden, 'change', function() {
 
 on($url, 'click', function(e) {
     play('http://localhost:8888/')
-    onsubs('../sub.vtt')
+    onsubs('../sub/sub.vtt')
 })
 
 on($body, 'load', function() {

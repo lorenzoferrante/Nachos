@@ -41,5 +41,5 @@ exports.createPlayer = function() {
 exports.serveSubtitle = function(path) {
     fs.createReadStream(path)
         .pipe(srt2vtt())
-        .pipe(fs.createWriteStream('sub.vtt'))
+        .pipe(fs.createWriteStream('sub/sub.vtt'))
 }

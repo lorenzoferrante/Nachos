@@ -26,6 +26,7 @@ class Controller {
           this.utils = new Utils()
           this.noti = new Notification()
           this.peerflix = new Process()
+          this.movieList = []
       }
 
       // Methods
@@ -69,18 +70,9 @@ class Controller {
 
       /* Methods to control Peerflix */
       private peerflixManager(magnet: string, path: string, mv: Movie) {
-          let cmd: string
-
           this.noti.playing(mv)
 
-          if (path != '') {
-              //cmd = 'peerflix "' + magnet + '" --vlc -- --sub-file=' + path
-              console.log(cmd)
-          } else {
-              //cmd = 'peerflix "' + magnet + '" --vlc'
-          }
-
-          cmd = 'peerflix "' + magnet + '"'
+          let cmd: string = 'peerflix "' + magnet + '"'
 
       	  let peerflix = exec(cmd, {maxBuffer: 1024 * 100000}, (error, stdout, stderror) => {
           	if (error) {
@@ -103,15 +95,15 @@ class Controller {
       /* Stream a torrent using VLC and Peerflix from command line */
       streamTorrent(movieID: string) {
           for (let mv of this.movieList) {
-              if (mv.imdbCode == movieID) {
+              if (mv.getIMDB() == movieID) {
                   // Download Subtitle
                   if (mv.getSubs().length > 0) {
                       let subPath = mv.getSubPath()
-                   	  this.peerflixManager(mv.magnet, subPath, mv)
+                   	  this.peerflixManager(mv.getMagnet(), subPath, mv)
                   } else {
-                   	  this.peerflixManager(mv.magnet, '', mv)
+                   	  this.peerflixManager(mv.getMagnet(), '', mv)
                   }
-                  console.log('Playing: ' + mv.title)
+                  console.log('Playing: ' + mv.getTitle())
               }
           }
       }

@@ -39,6 +39,7 @@ $(document).on('click', 'a.watch', function() {
 
 $(document).on('click', 'a.sub', function() {
     var movieID = $(this).attr('id')
+    $('.sub').css('border', 'none')
     $(this).css('border', '2px solid orange')
     var movieLang = $(this).find('span').attr('id')
     console.log(movieID + ' - ' + movieLang)
