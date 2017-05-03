@@ -7,9 +7,7 @@
     "build": "tsc",
     "prestart": "browserify js/webplayer.js > js/bundle.js && npm run build",
     "start": "electron .",
-    "pack": "electron-packager . Nachos --out=dist --arch=x64 --platform=darwin --version=1.4.4 --overwrite --prune --ignore=dist --ignore=typings",
-    "pack:osx": "electron-packager . Nachos --out=dist/osx --platform=darwin --arch=x64 --icon=static/electron-1.icns",
-    "build": "npm run pack:osx"
+    "pack": "electron-packager . Nachos --out=dist --arch=x64 --platform=darwin --version=1.4.4 --overwrite --prune --ignore=dist --ignore=typings"
   },
   "author": "",
   "license": "ISC",
