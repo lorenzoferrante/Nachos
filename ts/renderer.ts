@@ -31,8 +31,8 @@ let utils = new Utils()
 })
 
 $(document).on('click', 'a.watch', function() {
-   $('#waiting').show()
-   $('#container').addClass('blur')
+   /*$('#waiting').show()
+   $('#container').addClass('blur')*/
    var movieID = $(this).attr('id')
    ctrl.streamTorrent(movieID)
 })

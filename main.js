@@ -22,7 +22,7 @@ function createWindow () {
     resizable: false,
     maximizable: false,
     titleBarStyle: 'hidden',
-    icon: __dirname + '/static/app_icon.ico'
+    icon: __dirname + '/static/electron-1.icns'
 })
 
   // and load the index.html of the app.

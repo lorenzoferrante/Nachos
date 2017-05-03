@@ -85,11 +85,10 @@ class Controller {
               console.log('stderror: ' + stderror)
           })
 
-          this.peerflix.retrievePIDByName()
-          player.createPlayer()
+          let p = this.peerflix.retrievePIDByName()
+          player.createPlayer(p)
           if (path != '')
             player.serveSubtitle(path)
-
       }
 
       /* Stream a torrent using VLC and Peerflix from command line */
