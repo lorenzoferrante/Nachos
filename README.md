@@ -22,4 +22,4 @@ npm start
 
 ## Screenshots
 <p align="center"><img src="https://github.com/lorenzoferrante/Nachos/blob/master/static/example.png" width=400 /></p>
-<p align="center"><img src="https://github.com/lorenzoferrante/Nachos/blob/master/static/player-screen.jpg" width=400 /></p>
+<p align="center"><img src="https://github.com/lorenzoferrante/Nachos/blob/master/static/player-screen.jpg" width=600 /></p>
