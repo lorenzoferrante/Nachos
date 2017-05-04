@@ -127,10 +127,14 @@ class Movie {
 
   setSubs(data: any) {
       //console.log('[EVENT] setting subs for: ' + this.title)
+      let movieClass = '.' + this.imdbCode
+
+      if (data.length == 0) {
+          $(movieClass).append('<li>No subtitles for this movie yet.</li>')
+          return
+      }
       for (let sub of data) {
           let s = new Sub(this.title, sub.path.replace(/\s/g, ''), sub.langShort, this.imdbCode)
-
-          let movieClass = '.' + this.imdbCode
 
           if (sub.langShort == 'en') {
               $(movieClass).append('<li><a href="javascript:void(0)" id="'+this.imdbCode+'" class="sub"><span class="flag-icon flag-icon-gb flag-icon-squared" id="en"></span></a></li>')

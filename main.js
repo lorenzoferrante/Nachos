@@ -16,12 +16,13 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 600,
-    height: 700,
+    width: 700,
+    height: 900,
     frame: true,
     resizable: false,
     maximizable: false,
     titleBarStyle: 'hidden',
+    backgroundColor: '#181A1C',
     icon: __dirname + '/static/electron-1.icns'
 })
 
