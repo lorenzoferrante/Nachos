@@ -148,7 +148,7 @@ p.card-text {
 
 .list-lang {
 	display: block;
-	float: left;
+	float: right;
 	padding-top: 8px;
 	margin-left: -20px;
 }

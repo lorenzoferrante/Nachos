@@ -21,21 +21,23 @@
     "wzrd": "^1.1.0"
   },
   "dependencies": {
+    "add-event-listener": "^0.0.1",
+    "animate.css": "^3.5.2",
+    "concat-stream": "^1.4.7",
+    "drag-and-drop-files": "^0.0.1",
     "eztv": "0.0.10",
+    "filereader-stream": "^0.2.0",
     "flag-icon-css": "^2.8.0",
+    "humanize-duration": "^3.10.0",
     "imdb-api": "^2.2.1",
     "jquery": "^3.2.0",
     "node-notifier": "^5.1.2",
     "node-vlc-json": "0.0.3",
     "ps-node": "^0.1.5",
     "request": "^2.81.0",
+    "srt-to-vtt": "^1.0.1",
     "subtitler": "^2.6.0",
     "yify-search": "^1.0.0",
-    "yifysubtitles": "^2.1.2",
-    "concat-stream": "^1.4.7",
-    "filereader-stream": "^0.2.0",
-    "add-event-listener": "^0.0.1",
-    "drag-and-drop-files": "^0.0.1",
-    "srt-to-vtt": "^1.0.1"
+    "yifysubtitles": "^2.1.2"
   }
 }

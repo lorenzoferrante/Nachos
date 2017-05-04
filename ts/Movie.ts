@@ -44,13 +44,14 @@ class Movie {
   private magnet: string
   private imdbCode: string
   private year: string
+  private duration: string
   private torrent: Torrent
   private subs: Sub[]
   private found: boolean
   private subPath: string
   private u: Utils = new Utils()
 
-  constructor(title: string, bgImage: string, coverImage: string, desc: string, magnet: string, imdbCode: string, year: string, torrent: Torrent) {
+  constructor(title: string, bgImage: string, coverImage: string, desc: string, magnet: string, imdbCode: string, year: string, duration: string, torrent: Torrent) {
     this.title = title
     this.id = this.u.makeid()
     this.bgImage = bgImage
@@ -59,6 +60,7 @@ class Movie {
     this.magnet = magnet
     this.imdbCode = imdbCode
     this.year = year
+    this.duration = duration
     this.torrent = torrent
     this.subs = []
   }
@@ -90,6 +92,10 @@ class Movie {
 
   getYear(): string {
       return this.year
+  }
+
+  getDuration(): string {
+      return this.duration
   }
 
   getTorrent(): Torrent {

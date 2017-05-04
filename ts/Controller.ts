@@ -12,6 +12,7 @@ const yify = require('yify-search')
 const exec = require('child_process').exec
 const $ = require('jQuery')
 const player = require('../js/player')
+const humanizeDuration = require('humanize-duration')
 
 class Controller {
       peerflix: Process
@@ -48,12 +49,15 @@ class Controller {
                   $('#no-res').hide()
               }
 
+              console.log(result)
+
               // reuslt is a JSON object
               for (let mv of result) {
                   let tor: any = mv.torrents[0]
                   this.newTorrent = new Torrent(mv.state, tor.hash, tor.quality, tor.size, tor.url)
 
-                  this.movie = new Movie(mv.title, mv.background_image_original, mv.medium_cover_image, mv.summary, mv.magnet, mv.imdb_code, mv.year, this.newTorrent)
+                  let dur: string = String(humanizeDuration(mv.runtime * 60000))
+                  this.movie = new Movie(mv.title, mv.background_image_original, mv.medium_cover_image, mv.summary, mv.magnet, mv.imdb_code, mv.year, dur, this.newTorrent)
 
                   // Get subtitles
                   let mvSub = new MovieSub(this.movie)
@@ -63,7 +67,7 @@ class Controller {
 
                   //$('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">Size: '+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info">Year: '+this.movie.getYear()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><a href="#'+$(this).attr("id")+'" class="btn btn-primary watch" id="'+this.movie.getIMDB()+'">Watch!</a></p><a href="#'+$(this).attr("id")+'" class="btn btn-primary sub" id="'+this.movie.getIMDB()+'">Subtitles</a></div></div></li>')
 
-                  $('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">Size: '+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info">Year: '+this.movie.getYear()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><a href="#'+$(this).attr("id")+'" class="btn btn-primary watch" id="'+this.movie.getIMDB()+'">Watch!</a></p><ul class="list-lang '+this.movie.getIMDB()+'"></ul></div></div></li>')
+                  $('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">'+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info"> '+this.movie.getYear()+'</span><span class="badge badge-pill badge-warning">'+this.movie.getDuration()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><div><a href="#'+$(this).attr("id")+'" class="btn btn-primary trailer" id="'+this.movie.getIMDB()+'">Watch!</a><a href="#'+$(this).attr("id")+'" class="btn btn-info watch" id="'+this.movie.getIMDB()+'">Trailer</a><ul class="list-lang '+this.movie.getIMDB()+'"></ul></div></div></div></li>')
               }
           })
       }
