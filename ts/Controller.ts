@@ -13,6 +13,7 @@ const exec = require('child_process').exec
 const $ = require('jQuery')
 const player = require('../js/player')
 const humanizeDuration = require('humanize-duration')
+const open = require('open')
 
 class Controller {
       peerflix: Process
@@ -21,6 +22,7 @@ class Controller {
       movie: Movie
       movieList: Movie[]
       newTorrent: Torrent
+      torrentList: Torrent[]
       pid: number
 
       constructor() {
@@ -28,12 +30,14 @@ class Controller {
           this.noti = new Notification()
           this.peerflix = new Process()
           this.movieList = []
+          this.torrentList = []
       }
 
       // Methods
       /* Search torrent given the title using YIFY API */
       searchTorrent(query: string) {
           this.movieList = []
+          this.torrentList = []
 
           yify.search(query, (error, result) => {
               if (error) {
@@ -51,13 +55,29 @@ class Controller {
 
               console.log(result)
 
+
+              // Buttons to display for movie quality
+              let qualityBtn: string = ''
+
               // reuslt is a JSON object
               for (let mv of result) {
-                  let tor: any = mv.torrents[0]
-                  this.newTorrent = new Torrent(mv.state, tor.hash, tor.quality, tor.size, tor.url)
+                  let qualityBtn: string = ''
+
+                  for (let tor of mv.torrents) {
+                        this.torrentList.push(new Torrent(mv.state, tor.hash, tor.quality, tor.size, tor.url))
+
+                        if (tor.quality == '720p') {
+                            qualityBtn += '<a href="javascript:void(0)" class="btn btn-primary watch 720p" id="'+mv.imdb_code+'">720p</a>'
+                        } else if (tor.quality == '1080p') {
+                            qualityBtn += '<a href="javascript:void(0)" class="btn btn-primary watch 1080p" id="'+mv.imdb_code+'">1080p</a>'
+                        } else if (tor.quality == '3D') {
+                            qualityBtn += '<a href="javascript:void(0)" class="btn btn-primary watch 3D" id="'+mv.imdb_code+'">3D</a>'
+                        }
+                  }
 
                   let dur: string = String(humanizeDuration(mv.runtime * 60000))
-                  this.movie = new Movie(mv.title, mv.background_image_original, mv.medium_cover_image, mv.summary, mv.magnet, mv.imdb_code, mv.year, dur, this.newTorrent)
+                  let trailer: string = 'https://www.youtube.com/watch?v=' + mv.yt_trailer_code
+                  this.movie = new Movie(mv.title, mv.background_image_original, mv.medium_cover_image, mv.summary, mv.magnet, mv.imdb_code, mv.year, dur, trailer, this.torrentList)
 
                   // Get subtitles
                   let mvSub = new MovieSub(this.movie)
@@ -67,7 +87,9 @@ class Controller {
 
                   //$('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">Size: '+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info">Year: '+this.movie.getYear()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><a href="#'+$(this).attr("id")+'" class="btn btn-primary watch" id="'+this.movie.getIMDB()+'">Watch!</a></p><a href="#'+$(this).attr("id")+'" class="btn btn-primary sub" id="'+this.movie.getIMDB()+'">Subtitles</a></div></div></li>')
 
-                  $('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">'+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info"> '+this.movie.getYear()+'</span><span class="badge badge-pill badge-warning">'+this.movie.getDuration()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><div><a href="#'+$(this).attr("id")+'" class="btn btn-primary trailer" id="'+this.movie.getIMDB()+'">Watch!</a><a href="#'+$(this).attr("id")+'" class="btn btn-info watch" id="'+this.movie.getIMDB()+'">Trailer</a><ul class="list-lang '+this.movie.getIMDB()+'"></ul></div></div></div></li>')
+                  //$('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">'+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info"> '+this.movie.getYear()+'</span><span class="badge badge-pill badge-warning">'+this.movie.getDuration()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><div><a href="#'+$(this).attr("id")+'" class="btn btn-primary watch" id="'+this.movie.getIMDB()+'">Watch!</a><a href="#'+$(this).attr("id")+'" class="btn btn-info trailer" id="'+this.movie.getIMDB()+'">Trailer</a><ul class="list-lang '+this.movie.getIMDB()+'"></ul></div></div></div></li>')
+
+                  $('#results').append('<li class="res"> <div class="card" style="width: 100%;"> <img class="card-img-top" src="'+this.movie.getBgImage()+'"> <div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"> <h4 class="card-title">'+this.movie.getTitle()+' <br><span class="badge badge-pill badge-info">'+this.movie.getYear()+'</span> <span class="badge badge-pill badge-warning">'+this.movie.getDuration()+'</span> </h4> <p class="card-text">'+this.movie.getDesc()+'</p><div> <h5 style="margin-top: 20px;">Watch:</h5> <a href="javascript:void(0)" class="btn btn-info trailer" id="'+this.movie.getIMDB()+'">Trailer</a> '+qualityBtn+' <br><br><h5 style="margin-top: 20px;">Subtitles:</h5> <ul class="list-lang '+this.movie.getIMDB()+'"></ul> </div></div></div></li>')
               }
           })
       }
@@ -96,15 +118,19 @@ class Controller {
       }
 
       /* Stream a torrent using VLC and Peerflix from command line */
-      streamTorrent(movieID: string) {
+      streamTorrent(movieID: string, movieQual: string) {
+          console.log(movieQual)
+
           for (let mv of this.movieList) {
               if (mv.getIMDB() == movieID) {
+                  // Get chosen quality
+                  let magnet = mv.getMagnetFromQuality(movieQual)
                   // Download Subtitle
                   if (mv.getSubs().length > 0) {
                       let subPath = mv.getSubPath()
-                   	  this.peerflixManager(mv.getMagnet(), subPath, mv)
+                   	  this.peerflixManager(magnet, subPath, mv)
                   } else {
-                   	  this.peerflixManager(mv.getMagnet(), '', mv)
+                   	  this.peerflixManager(magnet, '', mv)
                   }
                   console.log('Playing: ' + mv.getTitle())
               }
@@ -130,6 +156,17 @@ class Controller {
               }
           }
       }
+
+      openTrailer(movieID: string) {
+          for (let mv of this.movieList) {
+              if (mv.getIMDB() == movieID) {
+                  // Open trailer in browser
+                  console.log(mv.getTrailerLink())
+                  open(mv.getTrailerLink())
+              }
+          }
+      }
+
 
 }
 

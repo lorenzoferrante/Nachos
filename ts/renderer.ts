@@ -31,10 +31,16 @@ let utils = new Utils()
 })
 
 $(document).on('click', 'a.watch', function() {
-   /*$('#waiting').show()
-   $('#container').addClass('blur')*/
    var movieID = $(this).attr('id')
-   ctrl.streamTorrent(movieID)
+   var movieQualArray = $(this).attr('class').split(' ')
+   var movieQual = movieQualArray[movieQualArray.length - 1]
+   console.log(movieQualArray + ' - ' + movieQual)
+   ctrl.streamTorrent(movieID, movieQual)
+})
+
+$(document).on('click', 'a.trailer', function() {
+    var movieID = $(this).attr('id')
+    ctrl.openTrailer(movieID)
 })
 
 $(document).on('click', 'a.sub', function() {

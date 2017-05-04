@@ -33,6 +33,7 @@
     "jquery": "^3.2.0",
     "node-notifier": "^5.1.2",
     "node-vlc-json": "0.0.3",
+    "open": "0.0.5",
     "ps-node": "^0.1.5",
     "request": "^2.81.0",
     "srt-to-vtt": "^1.0.1",

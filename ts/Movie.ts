@@ -43,15 +43,16 @@ class Movie {
   private desc: string
   private magnet: string
   private imdbCode: string
+  private trailerLink: string
   private year: string
   private duration: string
-  private torrent: Torrent
+  private torrent: Torrent[]
   private subs: Sub[]
   private found: boolean
   private subPath: string
   private u: Utils = new Utils()
 
-  constructor(title: string, bgImage: string, coverImage: string, desc: string, magnet: string, imdbCode: string, year: string, duration: string, torrent: Torrent) {
+  constructor(title: string, bgImage: string, coverImage: string, desc: string, magnet: string, imdbCode: string, year: string, duration: string, trailerLink: string, torrent: Torrent[]) {
     this.title = title
     this.id = this.u.makeid()
     this.bgImage = bgImage
@@ -61,6 +62,7 @@ class Movie {
     this.imdbCode = imdbCode
     this.year = year
     this.duration = duration
+    this.trailerLink = trailerLink
     this.torrent = torrent
     this.subs = []
   }
@@ -98,7 +100,11 @@ class Movie {
       return this.duration
   }
 
-  getTorrent(): Torrent {
+  getTrailerLink(): string {
+      return this.trailerLink
+  }
+
+  getTorrent(): Torrent[] {
       return this.torrent
   }
 
@@ -137,6 +143,18 @@ class Movie {
   }
 
   // Methods
+  getMagnetFromQuality(movieQual: string): string {
+      for (let tor of this.torrent) {
+          console.log(movieQual + ' - ' + tor.getQuality())
+          if (movieQual == tor.getQuality()) {
+              return tor.getTorrentURL()
+          }
+      }
+
+      // Get Notification for error
+      return undefined
+  }
+
   getFavSub(): string {
       let path: string
 
