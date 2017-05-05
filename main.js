@@ -14,10 +14,15 @@ const url = require('url')
 let mainWindow
 
 function createWindow () {
+  let screenElectron = electron.screen
+  let mainScreen = screenElectron.getPrimaryDisplay()
+  let dimensions = mainScreen.size
+  let windowHeight = dimensions.height * 0.93
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 700,
-    height: 900,
+    height: windowHeight,
     frame: true,
     resizable: false,
     maximizable: false,

@@ -8,7 +8,7 @@ import { Notification } from './Notification'
 
 const EventEmitter = require('events').EventEmitter
 const pt = require('path')
-const yify = require('yify-search')
+const yify = require('../js/yify')
 const exec = require('child_process').exec
 const $ = require('jQuery')
 const player = require('../js/player')

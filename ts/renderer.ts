@@ -51,9 +51,3 @@ $(document).on('click', 'a.sub', function() {
     console.log(movieID + ' - ' + movieLang)
     ctrl.setSubLang(movieID, movieLang)
 })
-
-$(document).on('click', 'a#close-box', function() {
-   $('#waiting').hide()
-   $('#container').removeClass('blur')
-   ctrl.closePeerflix()
-})

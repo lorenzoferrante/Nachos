@@ -38,7 +38,6 @@
     "request": "^2.81.0",
     "srt-to-vtt": "^1.0.1",
     "subtitler": "^2.6.0",
-    "yify-search": "^1.0.0",
     "yifysubtitles": "^2.1.2"
   }
 }
