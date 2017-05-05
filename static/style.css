@@ -1,6 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,800');
+
 html, body {
 	background-color: #181A1C !important;
 	color: #ecf0f1 !important;
+}
+
+html, body, #container, #no-res, .input-group {
+	/*font-family: 'Roboto', sans-serif;*/
+	font-family: 'Open Sans', sans-serif;
+}
+
+.input-group {
+	margin-bottom: 30px;
+}
+
+h3, h4, h5 {
+	font-weight: 700 !important;
+}
+
+.card-title {
+	font-weight: 700;
 }
 
 ::-webkit-scrollbar {
@@ -71,12 +91,16 @@ html, body {
 }
 
 div {
-	margin-bottom : 30px;
+	margin-bottom : 2px;
 }
 
 ul#results {
 	list-style: none;
     padding-left: 0;
+}
+
+ul#results li {
+	margin-bottom: 30px;
 }
 
 #poster {
@@ -87,14 +111,20 @@ ul#results {
 }
 
 .card {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 	border: 1px solid #151616 !important;
 	background-color: #292D31 !important;
+}
+
+.card:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 span.badge {
 	margin-right: 5px;
 	font-size: 12px;
-	font-weight: lighter;
+	font-weight: lighter !important;
 }
 
 .card-img-top {
@@ -105,6 +135,8 @@ span.badge {
 }
 
 .poster {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 	z-index: 1;
 	position: relative;
 	width: 150px;
@@ -116,6 +148,10 @@ span.badge {
 	border-radius: 3px;
 }
 
+.poster:hover {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
 p.card-text {
 	font-size: 14px !important;
 	color: #898989 !important;
@@ -125,6 +161,10 @@ p.card-text {
 	background-color: #292D31 !important;
 	border-color: #151616 !important;
 	color: #ecf0f1 !important;
+}
+
+.btn:hover {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .btn-default {
@@ -160,4 +200,5 @@ p.card-text {
 .list-lang li {
 	display: inline;
 	margin-right: 15px;
+	margin-bottom: -100px;
 }

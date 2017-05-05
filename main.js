@@ -17,7 +17,7 @@ function createWindow () {
   let screenElectron = electron.screen
   let mainScreen = screenElectron.getPrimaryDisplay()
   let dimensions = mainScreen.size
-  let windowHeight = dimensions.height * 0.93
+  let windowHeight = dimensions.height * 0.97
 
   // Create the browser window.
   mainWindow = new BrowserWindow({

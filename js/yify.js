@@ -2,7 +2,7 @@ const request = require('request')
 
 const API = {
   list: 'https://yts.ag/api/v2/list_movies.json',
-  listDownload: 'https://yts.ag/api/v2/list_movies.json?sort_by=download_count&limit=20',
+  listDownload: 'https://yts.ag/api/v2/list_movies.json?sort_by=download_count&limit=50',
   detail: 'https://yts.ag/api/v2/movie_details.json'
 }
 const QUALITY = '1080p'
