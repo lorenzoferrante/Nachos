@@ -11,6 +11,18 @@ html, body, #container, #no-res, .input-group {
 	font-family: 'Open Sans', sans-serif;
 }
 
+input:hover {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+input:active {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+input:focus {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
 .input-group {
 	margin-bottom: 30px;
 }
@@ -127,11 +139,17 @@ span.badge {
 	font-weight: lighter !important;
 }
 
+.img-cont {
+	width: 100% !important;
+	max-height: 200px;
+	background-size: cover !important;
+	overflow: hidden;
+}
+
 .card-img-top {
+	width: 100%;
 	filter: brightness(0.5);
 	-webkit-filter: brightness(0.5);
-	height: 200px !important;
-	background-size: cover !important;
 }
 
 .poster {
