@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>webplay</title>
+  <title>Nachos Player</title>
+  <meta charset="utf-8">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <style>
     html, body {
       font-family: Helvetica;
@@ -98,7 +100,7 @@
     }
 
     video {
-      display: none;
+      display: visible;
       position: fixed;
       top: 0;
       left: 0;
@@ -108,13 +110,58 @@
   </style>
 </head>
 <body id="drag-area">
-  <div id="menu">
+  <!--<div id="menu">
       <a href="#" id="url"><img src="nachos_logo_2.png"/></a>
-</div>
+</div>-->
   <div id="video">
-    <video controls crossorigin="anonymous"></video>
+    <video id="player" controls crossorigin="anonymous"></video>
   </div>
   <input id="hidden-file" type="file">
-  <script src="../js/bundle.js"></script>
+  <!--<script src="../js/bundle.js" charset="utf-8"></script>-->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript">
+
+  function readTextFile(file) {
+      var rawFile = new XMLHttpRequest()
+      rawFile.open("GET", file, false)
+      rawFile.onreadystatechange = function () {
+          if(rawFile.readyState === 4) {
+              if(rawFile.status === 200 || rawFile.status == 0) {
+                  var allText = rawFile.responseText
+                  var addr = allText.split('\n')[0]
+                  var isSub = allText.split('\n')[1]
+
+                  var player = $("#player")
+                  player.attr('src', addr)
+                  player.get(0).play()
+                  console.log(addr)
+
+                  console.log(isSub)
+                  if (isSub == 'true') {
+                      var video = document.getElementById('player'), track;
+                      video.addEventListener("loadedmetadata", function() {
+                          track = document.createElement("track")
+                          track.kind = "captions"
+                          track.label = "English"
+                          track.srclang = "en"
+                          track.src = "../sub/sub.vtt"
+                          track.addEventListener("load", function() {
+                              this.mode = 'showing'
+                              video.textTracks[0].mode = 'showing'
+                          })
+                          this.appendChild(track);
+                      })
+                  }
+              }
+          }
+      }
+      rawFile.send(null);
+    }
+
+    $(window).on('load', function () {
+        readTextFile('../server.txt')
+    })
+
+  </script>
 </body>
 </html>

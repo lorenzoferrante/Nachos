@@ -10,44 +10,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="../node_modules/flag-icon-css/css/flag-icon.min.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   </head>
   <body class="animated bounceInDown">
 
-      <!--<div id="waiting">
-        <p>Click close to go back to the app.</p>
-        <a href="#" id="close-box">Close</a>
-    </div>-->
-
       <div class="alert alert-danger" id="no-conn" role="alert"><p>No internet connection! Try again later (or cmd + R)</p></div>
 
   		<div id="drag-area">
+      		<div id="container">
+                <div id="no-res"><h4>Sorry, this movie is not in the database yet! Please try again later.</h4></div>
+      			<div id="logo-div"><a href="index.html"><img src="nachos_logo_2.png" id="logo" alt="logo"></a></div>
 
-  		<div id="container">
-        <div id="no-res"><h4>Sorry, this movie is not in the database yet! Please try again later.</h4></div>
-  			<div id="logo-div"><img src="nachos_logo_2.png" id="logo" alt="logo"></div>
+        		<div class="input-group">
+                    <input type="text" class="form-control" id="str" placeholder="Search for movie...">
+                    <span class="input-group-btn">
+                    	<button class="btn btn-default" id="search-btn" type="button">Search</button>
+                    </span>
+                </div>
 
-    		<div class="input-group">
-                <input type="text" class="form-control" id="str" placeholder="Search for movie...">
-                <span class="input-group-btn">
-                	<button class="btn btn-default" id="search-btn" type="button">Search</button>
-                </span>
-           </div>
-
-           	<ul id="results">
-           	<!--<li><div class="card" style="width: 100%;">
-				<img class="card-img-top" src="" alt="Card image cap">
-				<div class="card-block">
-			    	<h4 class="card-title">Card title</h4>
-			    	<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    	<a href="#" class="btn btn-primary">Watch!</a>
-			  	</div>
-			</div></li>-->
-			</ul>
-
-      	</div>
+               	<ul id="results"></ul>
+          	</div>
       	</div>
   </body>
 

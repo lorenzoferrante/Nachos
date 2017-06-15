@@ -25,7 +25,7 @@ exports.createPlayer = function() {
       resizable: true,
       maximizable: false,
       titleBarStyle: 'hidden',
-    })
+  })
 
     mainID = getMainID()
     mainWin = BrowserWindow.fromId(mainID)
@@ -84,7 +84,9 @@ function killProcess() {
 }
 
 exports.serveSubtitle = function(path) {
-    fs.createReadStream(path)
-        .pipe(srt2vtt())
-        .pipe(fs.createWriteStream('sub/sub.vtt'))
+    if (path) {
+        fs.createReadStream(path)
+            .pipe(srt2vtt())
+            .pipe(fs.createWriteStream('sub/sub.vtt'))
+    }
 }

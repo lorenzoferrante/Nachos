@@ -14,21 +14,27 @@ const $ = require('jQuery')
 const player = require('../js/player')
 const humanizeDuration = require('humanize-duration')
 const open = require('open')
+const peerflix = require('peerflix')
+const network = require('network-address')
+const numeral = require('numeral')
+const readTorrent = require('read-torrent')
+const fs = require('fs')
+const portfinder = require('portfinder')
+const http = require('http')
 
 class Controller {
-      peerflix: Process
+      peerflixProc: Process
       utils: Utils
       noti: Notification
       movie: Movie
       movieList: Movie[]
-      newTorrent: Torrent
       torrentList: Torrent[]
       pid: number
 
       constructor() {
           this.utils = new Utils()
           this.noti = new Notification()
-          this.peerflix = new Process()
+          this.peerflixProc = new Process()
           this.movieList = []
           this.torrentList = []
       }
@@ -36,10 +42,9 @@ class Controller {
       // Methods
       /* Search torrent given the title using YIFY API */
       searchTorrent(query: string) {
-          this.movieList = []
-          this.torrentList = []
-
           yify.search(query, (error, result) => {
+              this.movieList = []
+
               if (error) {
                   console.log(error)
                   this.noti.netError()
@@ -55,12 +60,12 @@ class Controller {
 
               console.log(result)
 
-
               // Buttons to display for movie quality
               let qualityBtn: string = ''
 
               // reuslt is a JSON object
               for (let mv of result) {
+                  this.torrentList = []
                   let qualityBtn: string = ''
 
                   for (let tor of mv.torrents) {
@@ -85,36 +90,66 @@ class Controller {
 
                   this.movieList.push(this.movie)
 
-                  //$('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">Size: '+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info">Year: '+this.movie.getYear()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><a href="#'+$(this).attr("id")+'" class="btn btn-primary watch" id="'+this.movie.getIMDB()+'">Watch!</a></p><a href="#'+$(this).attr("id")+'" class="btn btn-primary sub" id="'+this.movie.getIMDB()+'">Subtitles</a></div></div></li>')
-
-                  //$('#results').append('<li class="res"><div class="card" style="width: 100%;"><img class="card-img-top" src="'+this.movie.getBgImage()+'"><div class="card-block"><img src="'+this.movie.getCoverImage()+'" class="poster"><h4 class="card-title">'+this.movie.getTitle()+'<br><span class="badge badge-pill badge-success">'+this.newTorrent.getSize()+'</span><span class="badge badge-pill badge-primary">'+this.newTorrent.getQuality()+'</span><span class="badge badge-pill badge-info"> '+this.movie.getYear()+'</span><span class="badge badge-pill badge-warning">'+this.movie.getDuration()+'</span></h4><p class="card-text">'+this.movie.getDesc()+'</p><div><a href="#'+$(this).attr("id")+'" class="btn btn-primary watch" id="'+this.movie.getIMDB()+'">Watch!</a><a href="#'+$(this).attr("id")+'" class="btn btn-info trailer" id="'+this.movie.getIMDB()+'">Trailer</a><ul class="list-lang '+this.movie.getIMDB()+'"></ul></div></div></div></li>')
-
                   $('#results').append('<li class="res"><div class="card" style="width: 100%;"> <div class="img-cont"><img class="card-img-top" src="'+this.movie.getBgImage()+'"></div> <div class="card-block"><div class="poster-box"><img src="'+this.movie.getCoverImage()+'" class="poster"></div> <h4 class="card-title">'+this.movie.getTitle()+' <br><span class="badge badge-pill badge-info">'+this.movie.getYear()+'</span> <span class="badge badge-pill badge-warning">'+this.movie.getDuration()+'</span> </h4> <p class="card-text">'+this.movie.getDesc()+'</p><div> <h5 style="margin-top: 20px;">Watch:</h5> <a href="javascript:void(0)" class="btn btn-info trailer" id="'+this.movie.getIMDB()+'">Trailer</a> '+qualityBtn+' <br><br><h5 style="margin-top: 20px;">Subtitles:</h5> <ul class="list-lang '+this.movie.getIMDB()+'"></ul> </div></div></div></li>')
+
+                  //console.log(this.movie)
               }
           })
       }
 
+      /* Methods to convert number in bytes */
+      private bytes(num: number) {
+          return numeral(num).format('0.0b')
+      }
+
       /* Methods to control Peerflix */
       private peerflixManager(magnet: string, path: string, mv: Movie) {
-          this.noti.playing(mv)
+          readTorrent(magnet, (err, torrent) => {
+              console.log(torrent)
+              // TODO: Gestire errore
+              if (err) return
 
-          let cmd: string = 'peerflix "' + magnet + '"'
+              let engine = peerflix(torrent)
+              let downloadedPercentage = 0
+              let verified = 0
+              let ready = false
 
-      	  let peerflix = exec(cmd, {maxBuffer: 1024 * 100000}, (error, stdout, stderror) => {
-          	if (error) {
-              	console.log('exec error: ' + error)
-                  return
-              }
+              engine.on('ready', () => {
+                  console.log('Ready to download the torrent.')
+                  ready = true
+              })
 
-              player.createPlayer()
-              console.log('stdoud: ' + stdout)
-              console.log('stderror: ' + stderror)
+              engine.server.on('listening', () => {
+                  let addr = 'http://' + network() + ':' + engine.server.address().port
+                  console.log(addr)
+
+                  // Write file
+                  let dataToWrite
+                  if (path != '') {
+                      player.serveSubtitle(path)
+                      dataToWrite = addr + '\ntrue'
+                  } else {
+                      dataToWrite = addr + '\nfalse'
+                  }
+
+                  fs.writeFile(__dirname + '/../server.txt', dataToWrite, (err) => {
+                      if (err) console.log(err)
+                      console.log('File server.txt written')
+                  })
+
+                  this.noti.playing(mv)
+                  player.createPlayer()
+
+                  let p = this.peerflixProc.retrievePIDByName()
+              })
+
+              engine.on('verify', () => {
+                  verified++
+                  downloadedPercentage = Math.floor(verified / engine.torrent.pieces.length * 100)
+                  if (ready)
+                      console.log('Downloaded: ' + downloadedPercentage + '% at speed: ' + this.bytes(engine.swarm.downloadSpeed()) + '/s')
+              })
           })
-
-          let p = this.peerflix.retrievePIDByName()
-          player.createPlayer()
-          if (path != '')
-            player.serveSubtitle(path)
       }
 
       /* Stream a torrent using VLC and Peerflix from command line */
@@ -139,11 +174,12 @@ class Controller {
 
       /* Kill current Peerflix process and the associated VLC process */
       closePeerflix() {
-          let pid = this.peerflix.getPID()
+          let pid = this.peerflixProc.getPID()
           console.log('Killing Peerflix with PID: ' + pid)
-          this.peerflix.killProcess()
+          this.peerflixProc.killProcess()
       }
 
+      /* Setting sub lang by user preference */
       setSubLang(movieID: string, movieLang: string) {
           for (let mv of this.movieList) {
               if (mv.getIMDB() == movieID) {
@@ -157,6 +193,7 @@ class Controller {
           }
       }
 
+      /* Open trailer in the browser */
       openTrailer(movieID: string) {
           for (let mv of this.movieList) {
               if (mv.getIMDB() == movieID) {
@@ -166,7 +203,6 @@ class Controller {
               }
           }
       }
-
 
 }
 
