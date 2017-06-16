@@ -46,6 +46,7 @@ let genres = [
        $('.list-genre').append(l)
    }
 
+   $('h3#genre-title').text('Popular Movies')
    ctrl.searchTorrent('', '')
  })
 
@@ -56,6 +57,10 @@ let genres = [
 
    $('#results').empty()
    query = $('#str').val()
+   if (query == '')
+        $('h3#genre-title').text('Popular Movies')
+   else
+        $('h3#genre-title').text('Searching: ' + query)
    ctrl.searchTorrent(query, '')
 })
 
