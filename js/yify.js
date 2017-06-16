@@ -1,8 +1,10 @@
 const request = require('request')
+const cheerio = require('cheerio')
 
 const API = {
   list: 'https://yts.ag/api/v2/list_movies.json',
   listDownload: 'https://yts.ag/api/v2/list_movies.json?sort_by=download_count&limit=50',
+  listGenre: 'https://yts.ag/api/v2/list_movies.json?sort_by=download_count&limit=50&genre=',
   detail: 'https://yts.ag/api/v2/movie_details.json'
 }
 const QUALITY = '1080p'
@@ -21,10 +23,13 @@ const magnetURI = (hash, title) => {
   return `magnet:?xt=urn:btih:${hash}&dn=${encodeURIComponent(title)}&tr=${TRACKERS}`
 }
 
-exports.search = (query, callback) => {
+exports.search = (query, genre, callback) => {
   var apiReq
-  if (query == '') {
+  if (query == '' && genre == '') {
       apiReq = API.listDownload
+  } else if (genre != '') {
+      apiReq = API.listGenre + genre
+      query = ''
   } else {
       apiReq = API.list
   }

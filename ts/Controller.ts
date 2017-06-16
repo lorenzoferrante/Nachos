@@ -41,8 +41,8 @@ class Controller {
 
       // Methods
       /* Search torrent given the title using YIFY API */
-      searchTorrent(query: string) {
-          yify.search(query, (error, result) => {
+      searchTorrent(query: string, genre: string) {
+          yify.search(query, genre, (error, result) => {
               this.movieList = []
 
               if (error) {
@@ -63,6 +63,7 @@ class Controller {
               // Buttons to display for movie quality
               let qualityBtn: string = ''
 
+              $('#results').empty()
               // reuslt is a JSON object
               for (let mv of result) {
                   this.torrentList = []

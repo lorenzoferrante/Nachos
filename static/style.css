@@ -220,3 +220,50 @@ p.card-text {
 	margin-right: 15px;
 	margin-bottom: -100px;
 }
+
+.dropdown {
+	max-width: 100%;
+}
+.list-genre {
+	padding: 0;
+   	list-style-type: none;
+	display: inline-block;
+    overflow: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    margin: 0 0 1em;
+    white-space: nowrap;
+	margin-bottom: 0px;
+}
+
+.list-genre li {
+	display: inline-block;
+    vertical-align: top;
+	margin-right: 40px;
+}
+
+.list-genre li a {
+	color: rgba(255, 255, 255, 0.4);
+	text-decoration: none;
+}
+
+.list-genre li a:hover {
+	color: #fff;
+	border-bottom: 2px solid #197BB5;
+}
+
+.list-genre li a:hover {
+	color: #fff;
+	border-bottom: 2px solid #197BB5;
+
+}
+
+hr {
+	background: rgba(255, 255, 255, 0.1);
+	border: none;
+}
+
+h3#genre-title {
+	margin-bottom: 20px;
+	font-weight: 700;
+}

@@ -12,12 +12,41 @@ const yify = require('yify-search')
 let query, maxlength = 35
 let ctrl = new Controller()
 let utils = new Utils()
+let genres = [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Film-Noir",
+    "History",
+    "Horror",
+    "Music",
+    "Musical",
+    "Mystery",
+    "Romance",
+    "Sci-fi",
+    "Sport",
+    "Thriller",
+    "War",
+    "Western"
+]
 
  $(window).on('load', function() {
    $('#no-res').hide()
    $('#waiting').hide()
 
-   ctrl.searchTorrent('')
+   for (let g of genres) {
+       let l = '<li><a href="#" id="' + g +'" class="genres">' + g + '</a></li>'
+       $('.list-genre').append(l)
+   }
+
+   ctrl.searchTorrent('', '')
  })
 
  $('#search-btn').on('click', function() {
@@ -27,7 +56,7 @@ let utils = new Utils()
 
    $('#results').empty()
    query = $('#str').val()
-   ctrl.searchTorrent(query)
+   ctrl.searchTorrent(query, '')
 })
 
 $(document).on('click', 'a.watch', function() {
@@ -36,6 +65,13 @@ $(document).on('click', 'a.watch', function() {
    var movieQual = movieQualArray[movieQualArray.length - 1]
    console.log(movieQualArray + ' - ' + movieQual)
    ctrl.streamTorrent(movieID, movieQual)
+})
+
+$(document).on('click', 'a.genres', function() {
+    var genre = $(this).attr('id')
+    ctrl.searchTorrent('', genre)
+    $('h3#genre-title').text(genre)
+    console.log('Searching ' + genre + ' movies.')
 })
 
 $(document).on('click', 'a.trailer', function() {
