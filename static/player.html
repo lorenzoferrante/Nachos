@@ -142,8 +142,8 @@
                       video.addEventListener("loadedmetadata", function() {
                           track = document.createElement("track")
                           track.kind = "captions"
-                          track.label = "English"
-                          track.srclang = "en"
+                          //track.label = "English"
+                          //track.srclang = "en"
                           track.src = "../sub/sub.vtt"
                           track.addEventListener("load", function() {
                               this.mode = 'showing'

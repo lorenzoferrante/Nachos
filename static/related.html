@@ -21,31 +21,18 @@
 
   		<div id="drag-area">
       		<div id="container">
-                <div id="no-res"><h4>Sorry, this movie is not in the database yet! Please try again later.</h4></div>
       			<div id="logo-div"><a href="index.html"><img src="nachos_logo_2.png" id="logo" alt="logo"></a></div>
 
-        		<div class="input-group">
-                    <input type="text" class="form-control" id="str" placeholder="Search for movie...">
-                    <span class="input-group-btn">
-                    	<button class="btn btn-default" id="search-btn" type="button">Search</button>
-                    </span>
-                </div>
-
-                <div class="dropdown">
-                    <ul class="list-genre">
-                        <li><a href="related.html">Per Te</a></li>
-                    </ul>
-                </div>
-
                 <hr>
-                <h3 id="genre-title">Popular Movies</h3>
-               	<ul id="results"></ul>
+                <h3 id="genre-title" class="no-margin">Per Te</h3>
+                <p class="summ">Ecco una lista di film che abbiamo trovato per te in base alle tue preferenze.</p>
+
           	</div>
       	</div>
   </body>
 
   <script>
     // You can also require other files to run in this process
-    require('../compiledJS/renderer.js')
+    require('../compiledJS/related.js')
   </script>
 </html>

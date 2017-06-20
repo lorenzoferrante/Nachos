@@ -1,6 +1,7 @@
 import { Torrent } from './Torrent'
 import { MovieSub } from './MovieSub'
 import { Utils } from './Utils'
+import { Notification } from './Notification'
 
 const $ = require('jQuery')
 
@@ -37,7 +38,6 @@ class Sub {
 
 class Movie {
   private title: string
-  private id: string
   private bgImage: string
   private coverImage: string
   private desc: string
@@ -51,10 +51,10 @@ class Movie {
   private found: boolean
   private subPath: string
   private u: Utils = new Utils()
+  private noti: Notification = new Notification()
 
   constructor(title: string, bgImage: string, coverImage: string, desc: string, magnet: string, imdbCode: string, year: string, duration: string, trailerLink: string, torrent: Torrent[]) {
     this.title = title
-    this.id = this.u.makeid()
     this.bgImage = bgImage
     this.coverImage = coverImage
     this.desc = desc
@@ -112,10 +112,6 @@ class Movie {
       return this.subs
   }
 
-  getID(): string {
-      return this.id
-  }
-
   getSubPath() {
       return this.subPath
   }
@@ -156,6 +152,7 @@ class Movie {
       }
 
       // Get Notification for error
+      this.noti.torrentError()
       return undefined
   }
 

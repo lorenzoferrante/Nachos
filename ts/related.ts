@@ -3,7 +3,7 @@
 // All of the Node.js APIs are available in this process.
 import { Movie } from './Movie'
 import { Controller } from './Controller'
-import { Utils } from './Utils'
+import { RelatedController } from './RelatedController'
 
 const $ = require('jQuery')
 const imdb = require('imdb-api')
@@ -11,59 +11,18 @@ const yify = require('yify-search')
 
 let query, maxlength = 35
 let ctrl = new Controller()
-let utils = new Utils()
-let genres = [
-    "Action",
-    "Adventure",
-    "Animation",
-    "Biography",
-    "Comedy",
-    "Crime",
-    "Documentary",
-    "Drama",
-    "Family",
-    "Fantasy",
-    "Film-Noir",
-    "History",
-    "Horror",
-    "Music",
-    "Musical",
-    "Mystery",
-    "Romance",
-    "Sci-fi",
-    "Sport",
-    "Thriller",
-    "War",
-    "Western"
-]
+let relCtrl = new RelatedController()
 
- $(window).on('load', function() {
-   $('#no-res').hide()
-
-   for (let g of genres) {
-       let l = '<li><a href="#" id="' + g +'" class="genres">' + g + '</a></li>'
-       $('.list-genre').append(l)
-   }
-
-   $('h3#genre-title').text('Popular Movies')
-   ctrl.searchTorrent('', '')
- })
-
- $('#search-btn').on('click', function() {
-   $('p').text(function (_, text) {
-      return $.trim(text).substring(0, maxlength);
-   })
-
-   $('#results').empty()
-   query = $('#str').val()
-   if (query == '')
-        $('h3#genre-title').text('Popular Movies')
-   else
-        $('h3#genre-title').text('Searching: ' + query)
-   ctrl.searchTorrent(query, '')
+$(window).on('load', function() {
+    relCtrl.findRelatedMovies()
 })
 
-$(document).on('click', 'a.watch', function() {
+$(document).on('click', 'a.suggMovie', function() {
+    var movieID = $(this).attr('id')
+    ctrl.searchTorrent(movieID, '')
+})
+
+/*$(document).on('click', 'a.watch', function() {
    var movieID = $(this).attr('id')
    var movieQualArray = $(this).attr('class').split(' ')
    var movieQual = movieQualArray[movieQualArray.length - 1]
@@ -90,4 +49,4 @@ $(document).on('click', 'a.sub', function() {
     var movieLang = $(this).find('span').attr('id')
     console.log(movieID + ' - ' + movieLang)
     ctrl.setSubLang(movieID, movieLang)
-})
+})*/

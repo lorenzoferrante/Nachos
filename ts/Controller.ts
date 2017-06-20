@@ -23,18 +23,15 @@ const portfinder = require('portfinder')
 const http = require('http')
 
 class Controller {
-      peerflixProc: Process
       utils: Utils
       noti: Notification
       movie: Movie
       movieList: Movie[]
       torrentList: Torrent[]
-      pid: number
 
       constructor() {
           this.utils = new Utils()
           this.noti = new Notification()
-          this.peerflixProc = new Process()
           this.movieList = []
           this.torrentList = []
       }
@@ -44,6 +41,7 @@ class Controller {
       searchTorrent(query: string, genre: string) {
           yify.search(query, genre, (error, result) => {
               this.movieList = []
+
 
               if (error) {
                   console.log(error)
@@ -140,8 +138,6 @@ class Controller {
 
                   this.noti.playing(mv)
                   player.createPlayer()
-
-                  let p = this.peerflixProc.retrievePIDByName()
               })
 
               engine.on('verify', () => {
@@ -171,13 +167,6 @@ class Controller {
                   console.log('Playing: ' + mv.getTitle())
               }
           }
-      }
-
-      /* Kill current Peerflix process and the associated VLC process */
-      closePeerflix() {
-          let pid = this.peerflixProc.getPID()
-          console.log('Killing Peerflix with PID: ' + pid)
-          this.peerflixProc.killProcess()
       }
 
       /* Setting sub lang by user preference */

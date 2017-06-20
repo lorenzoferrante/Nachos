@@ -10,7 +10,7 @@ class Notification {
     playing(mv: Movie) {
         notifier.notify({
             title: 'Playing: ' + mv.getTitle(),
-            message: 'Wait until VLC will open',
+            message: 'Wait until player will open',
             icon: path.join(__dirname, '../static/noti_logo.png'),
             sound: false,
             wait: false
@@ -36,6 +36,21 @@ class Notification {
                 return
             }
             console.log(res)
+        })
+    }
+
+    torrentError() {
+        notifier.notify({
+            title: 'Torrent not found',
+            message: '',
+            icon: path.join(__dirname, '../static/no_conn_logo.png'),
+            sound: false,
+            wait: false
+        }, (err, res) => {
+            if (err) {
+                console.log(err)
+                return
+            }
         })
     }
 }
